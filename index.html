@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="DeBias-CLIP improves long-context understanding in CLIP models by training with long captions and simple text augmentations.">
+  <meta name="keywords" content="CLIP, Vision-Language Models, Long-Context Retrieval, Computer Vision">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CLIP Is Shortsighted: Paying Attention Beyond the First Sentence</title>
+
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TSPQB2LZ');</script>
+  <!-- End Google Tag Manager -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/TRAIL_BLACK_ICON.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TSPQB2LZ" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">CLIP Is Shortsighted: Paying Attention Beyond the First Sentence</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <!-- <a href=" href="https://www.trailab.utias.utoronto.ca/marc-antoine-lavoie"">Marc-Antoine Lavoie</a> -->
+              Marc-Antoine Lavoie<sup>1</sup>,</span>
+              <span class="author-block">Anas Mahmoud<sup>2</sup>,</span>
+              <span class="author-block">Aldo Zaimi<sup>2</sup>,</span>
+              <span class="author-block">Arsene Fansi Tchango<sup>2</sup>,</span>
+              <span class="author-block">Steven L. Waslander<sup>1</sup>,</span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>University of Toronto Robotics Institute,</span>
+              <span class="author-block"><sup>2</sup>Mila,</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <!-- <span class="link-block">
+                  <a href="ADD CVPR LINK"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span> -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2602.22419" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- Video Link. -->
+                <!-- <span class="link-block">
+                  <a href="ADD VIDEO LINK"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/TRAILab/DeBias-CLIP" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="has-text-centered">
+            <img src="./static/images/first_figure.png" style="width: 90%;" alt="DeBias-CLIP schematic">
+        </div>
+        <h2 class="subtitle has-text-centered">
+          <span class="dnerf">DeBias-CLIP</span> improves long-context understanding in CLIP models by 
+          training with long captions with simple text augmentations. Our model has a significantly 
+          flatter text token attention distribution across the context window compared to the baseline.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Summary</h2>
+          <div class="content has-text-justified">
+            <ul>
+              <li><strong>CLIP Models Are Biased:</strong> We empirically show that CLIP models and similar models
+                (e.g. SigLIP) have a bias towards early text tokens and that this bias can be conserved when 
+                training with long captions.
+              <li><strong>Long-Caption Datasets Are Biased:</strong> Training and evaluation datasets used in long-context retrieval share a common strucute, where paragraph-length texts start with a summary sentence that can be sufficient to solve image-text matching.
+              <li><strong>Sentence-Level Augmentations:</strong> We use simple sentence augmentations to resolve this issue: drop the summary sentence, permute and subsample the remaining sentences, and add padding tokens.
+              <li><strong>Drop-In Replacement:</strong> We add no additional trainable parameters to CLIP beyond the extended text positional embeddings and our text augmentations have a negligible cost.
+              <!-- <li><strong>Better Performance, Better Robustness:</strong> We significantly improve on existing methods on long-caption retrieval benchmarks. -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+
+      <!-- Paper video. -->
+      <!-- <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Video</h2>
+          <div class="publication-video">
+            <iframe width="560" height="315" src="VIDEO LINK"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div> -->
+      <!--/ Paper video. -->
+    </div>
+  </section>
+
+
+  <section class="" section>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Biases in CLIP Text Encoders</h2>
+          <div class="content has-text-centered">
+              <img src="./static/images/padding_effects_clip_test.png" style="width: 60%;" alt="Effect of the number of padding sentences on retrieval performance">
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              First, we show that CLIP text encoders are biased towards early tokens by evaluating retrieval on the first 2 sentences of DOCCI. We add
+               padding uninformative padding sentences ("This is a photo.") before the caption. We find that simply offsetting the informative part of
+                the caption leads to a significant reduction in performance.
+            </p>
+          </div>
+                    <div class="content has-text-centered">
+              <img src="./static/images/docci_i2t_baseclip_all_test.png" style="width: 60%;" alt="Effect of sentence removal and permutation on CLIP retrieval performance">
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              Next, we show that even in the early tokens, sentence order matters. We again evaluate retrieval on the first 2 sentences of DOCCI, this time
+              considering the case where we permute the order of sentences (Swap 2) and where we only use the first sentence. We see that for all CLIP models,
+              permuting the order of the sentences (and thus putting the most informative first sentnce second) reduces performance. Notably, in the Swap 2 case,
+              this reduction is so significant for SigLIP models that any additional information added by the second sentence is balanced by less efficient use 
+              of the summary sentence.
+            </p>
+          </div>
+                    </div>
+                    <div class="content has-text-centered">
+              <img src="./static/images/docci_t2i_lc_vs_ours_all_test.png" style="width: 60%;" alt="Effect of sentence removal and permutation for retrieval with long-context CLIP models">
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              Finally, we evaluate the similar cases for models that are trained with long captions following the baseline Long-CLIP. Here, we use the full long
+              caption, and consider permuting the first and fourth sentences in the Move case. Again, all models show similar reduction in performance.
+              Compared to the baseline, our proposed DeBias-CLIP models have a consistently better performance and show less performance drop under the sentence permutation test.
+            </p>
+          </div>
+          <h2 class="title is-3">DeBias-CLIP: 3 Simple Text Augmentations</h2>
+          <div class="content has-text-justified">
+            <!-- <embed src="./static/images/TrackSampling_Vis_63_with_caption.pdf" style="width: 100%;" alt="Track_Sampling_Augmentation"> -->
+            <img src="./static/images/text_augmentations.png" style="width: 100%;" alt="Track_Sampling_Augmentation">
+            <p>
+              DeBias-CLIP follows the Long-CLIP baseline and train on long caption datasets. We similarly train with two captions: the 
+              full original caption and augmented caption. Our augmented caption replaces training with the first caption sentence in 
+              Long-CLIP, which is the cause of the text bias issue. Our augmented caption uses three simple sentence-level augmentations. 
+            </p>
+            <p>  
+              First, we simply <strong>remove the first sentence</strong> at the start of each caption. It is often a summary sentence that is more information-dense than the rest
+               of the caption, and so it contains enough information to optimize the text-image contrastive loss. This meanes that the model doesn't learn
+               to fully use the long captions. 
+            </p>
+            <p>
+              We find that this simple trick greatly improves long text retrieval, but it can reduce short text performance. To counteract this, we propose to
+              still train on shorter captions by randomly <strong>randomly subsampling the remaining sentencess</strong>, which also makes the training task harder
+              by reducing the information.
+            </p>
+            <p>
+              However, we find that subsampling does not greatly improve performance and can even have a negative impact. We believe this is due to training with less informative
+              text tokens at the early positions leads to a larger drift away from the original pretrained CLIP models, which are effective for short text retrieval. To avoid this and
+              to continue training the later positional embeddings, we <strong>add padding tokens</strong> before the caption text, which pushes the information deaper 
+               in the context window. Because we also train with the original full caption, the early positions are mostly trained with the dense summary sentence.
+            </p>
+          </div>
+      </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Long-Context Retrieval Visualizations</h2>
+          <div class="content has-text-justified">
+            <img src="./static/images/text_matching.png" style="width: 100%;" alt="JDT3D Visualization">
+            <!-- <div class="publication-video">
+              <iframe width="560" height="315" src="VIDEO LINK"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div> -->
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{lavoie2026clip,
+  author    = {Lavoie, Marc-Antoine and Mahmoud, Anas and Zaimi, Aldo and Tchango, Arsene Fansi and Waslander, Steven L},
+  title     = {CLIP Is Shortsighted: Paying Attention Beyond the First Sentence},
+  journal   = {arXiv preprint arXiv:2602.22419},
+  year      = {2026},  
+}</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="https://github.com/TRAILab" class="external-link" disabled>
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p>
+              Thank you to the authors of <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> for the
+              website template.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
