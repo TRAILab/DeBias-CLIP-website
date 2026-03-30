@@ -1,6 +1,6 @@
 # DeBias-CLIP
 
-This is the repository that contains source code for the [DeBias-CLIP website](https://trailab.github.io/debias-clip-website/).
+This is the repository that contains source code for the [DeBias-CLIP website](https://trailab.github.io/DeBias-CLIP-website/).
 
 If you find DeBias-CLIP useful for your work please cite:
 ```
