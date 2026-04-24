@@ -4,7 +4,7 @@ This is the repository that contains source code for the [DeBias-CLIP website](h
 
 If you find DeBias-CLIP useful for your work please cite:
 ```
-@article{cheongJDT3DAddressingGaps2024,
+@article{lavoie2026clip,
   author    = {Lavoie, Marc-Antoine and Mahmoud, Anas and Zaimi, Aldo and Fancy Tchango, Arsene and Waslander, Steven},
   title     = {CLIP Is Shortsighted: Paying Attention Beyond the First Sentence},
   journal   = {CVPR},
